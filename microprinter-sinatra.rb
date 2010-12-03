@@ -1,13 +1,16 @@
 require 'rubygems'
 require 'sinatra'
+# require 'sinatra/config_file'
 require 'rss'
 require 'open-uri'
 require 'cgi'
 # require './Microprinter_debug.rb' # uncomment this to print to the console instead of the printer. 
 require './Microprinter.rb' 
 
-set :arduinoport, "/dev/cu.usbserial-A1001NFW" # or whatever yours is. 
-# set :arduinoport, "/dev/cu.usbmodem24131" # or whatever yours is. 
+configure do
+  set :arduinoport, "/dev/cu.usbmodem24131" # or whatever yours is. 
+  # config_file "settings.yml"
+end
 
 before do
 #  @printer = Microprinter_debug.new(settings.arduinoport)
@@ -145,8 +148,20 @@ end
 
 get '/' do
   "try /print"
+  
+  # TODO: display a friendly big text field here where you can paste in a URL to be printed
+  # TODO: make the sinatra app into a configuration tool where you can manage feeds to be automatically polled and printed, as well as how often they get polled, printed, etc. 
 end
 
 get '/linkformat' do
+  linktext = <<-END_OF_LINKTEXT
+    Implementing the Demon-Haunted Notebook
+    http://paperbits.net/post/1471783673/implementing-the-demon-haunted-notebook
+    
+    
+    http://goo.gl/qjZ8T
+  END_OF_LINKTEXT
   
+  @printer.feed
+  @printer.print_and_cut linktext.split("\n")
 end
