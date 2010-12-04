@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-# require 'sinatra/config_file'
+
 require 'rss'
 require 'open-uri'
 require 'cgi'
@@ -8,8 +8,7 @@ require './Microprinter_debug.rb' # uncomment this to print to the console inste
 # require './Microprinter.rb' 
 
 configure do
-  set :arduinoport, "/dev/cu.usbmodem24131" # or whatever yours is. 
-  # config_file "settings.yml"
+  set :arduinoport, "/dev/cu.usbmodemfa241" # or whatever yours is. 
 end
 
 
