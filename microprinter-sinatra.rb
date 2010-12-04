@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'sinatra'
-
 require 'rss'
 require 'open-uri'
 require 'cgi'
