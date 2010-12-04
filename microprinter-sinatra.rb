@@ -11,9 +11,10 @@ configure do
 end
 
 
+
 before do
   @printer = Microprinter_debug.new(settings.arduinoport)
-  # @printer = Microprinter.new(settings.arduinoport)
+  @printer = Microprinter.new(settings.arduinoport)
   @printer.set_character_width_normal
 end
 
