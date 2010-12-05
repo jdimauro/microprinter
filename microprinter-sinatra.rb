@@ -152,13 +152,13 @@ get '/' do
 end
 
 get '/linkformat' do
-  linktext = <<-END_OF_LINKTEXT
-    Implementing the Demon-Haunted Notebook
-    http://paperbits.net/post/1471783673/implementing-the-demon-haunted-notebook
-    
-    
-    http://goo.gl/qjZ8T
-  END_OF_LINKTEXT
+ linktext = <<-END_OF_LINKTEXT
+Implementing the Demon-Haunted Notebook
+http://paperbits.net/post/1471783673/implementing-the-demon-haunted-notebook
+
+
+http://goo.gl/qjZ8T
+END_OF_LINKTEXT
   
   @printer.feed
   @printer.print_and_cut linktext.split("\n")
