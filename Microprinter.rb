@@ -201,7 +201,7 @@ class Microprinter
     @sp.putc position 
     @sp.flush
   end
-  
+
   def set_linefeed_rate(rate) #def = 22
     @sp.putc COMMAND 
     @sp.putc FEED_RATE 
