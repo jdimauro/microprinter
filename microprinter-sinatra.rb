@@ -11,7 +11,7 @@ configure do
 end
 
 before do
-#  @printer = Microprinter_debug.new(settings.arduinoport)
+  # @printer = Microprinter_debug.new(settings.arduinoport)
   @printer = Microprinter.new(settings.arduinoport)
   @printer.set_character_width_normal
 end
@@ -44,9 +44,12 @@ end
 
 get '/print/barcode' do
   @printer.set_barcode_width(Microprinter::BARCODE_WIDTH_MEDIUM)
+  puts Microprinter::BARCODE_WIDTH_MEDIUM # => 3
   @printer.set_barcode_height(45)
+  puts Microprinter::BARCODE_TEXT_BELOW # => 2
   @printer.set_barcode_text_position(Microprinter::BARCODE_TEXT_BELOW)
-  @printer.print_barcode(Microprinter::BARCODE_MODE_CODE39, "123456789")
+  # @printer.print_barcode(Microprinter::BARCODE_MODE_CODE39, "123456789")
+  @printer.print_barcode("123456789")
   @printer.feed_and_cut
   "Printed sample barcode"
 end
