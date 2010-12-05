@@ -3,37 +3,37 @@ require 'serialport'
 
 class Microprinter 
 
-  COMMAND = 0x1B
-  FULLCUT = 0x69
-  PARTIALCUT = 0x6D
-  PRINT_MODE = 0x21
+  COMMAND     = 0x1B
+  FULLCUT     = 0x69
+  PARTIALCUT  = 0x6D
+  PRINT_MODE  = 0x21
   DOUBLEPRINT = 0x47
-  UNDERLINE = 0x2D
-
-  COMMAND_BARCODE = 0x1D
-  COMMAND_BARCODE_PRINT = 0x6B
-  COMMAND_BARCODE_WIDTH = 0x77
-  COMMAND_BARCODE_HEIGHT = 0x68
+  UNDERLINE   = 0x2D
+  
+  COMMAND_BARCODE              = 0x1D
+  COMMAND_BARCODE_PRINT        = 0x6B
+  COMMAND_BARCODE_WIDTH        = 0x77
+  COMMAND_BARCODE_HEIGHT       = 0x68
   COMMAND_BARCODE_TEXTPOSITION = 0x48
-  COMMAND_BARCODE_FONT = 0x66
+  COMMAND_BARCODE_FONT         = 0x66
 
   BARCODE_WIDTH_NARROW = 0x02
   BARCODE_WIDTH_MEDIUM = 0x03
-  BARCODE_WIDTH_WIDE = 0x04
+  BARCODE_WIDTH_WIDE   = 0x04
 
-  BARCODE_TEXT_NONE = 0x00
+  BARCODE_TEXT_NONE  = 0x00
   BARCODE_TEXT_ABOVE = 0x01
   BARCODE_TEXT_BELOW = 0x02
-  BARCODE_TEXT_BOTH = 0x03
+  BARCODE_TEXT_BOTH  = 0x03
 
-  BARCODE_MODE_UPCA = 0x00
-  BARCODE_MODE_UPCE = 0x01
+  BARCODE_MODE_UPCA     = 0x00
+  BARCODE_MODE_UPCE     = 0x01
   BARCODE_MODE_JAN13AEN = 0x02
-  BARCODE_MODE_JAN8EAN = 0x03
-  BARCODE_MODE_CODE39 = 0x04
-  BARCODE_MODE_ITF = 0x05
+  BARCODE_MODE_JAN8EAN  = 0x03
+  BARCODE_MODE_CODE39   = 0x04
+  BARCODE_MODE_ITF      = 0x05
   BARCODE_MODE_CODEABAR = 0x06
-  BARCODE_MODE_CODE128 = 0x07
+  BARCODE_MODE_CODE128  = 0x07
 
   def initialize(port_str = "/dev/cu.usbserial-A1001NFW")  
     @port_str = port_str 
@@ -52,7 +52,7 @@ class Microprinter
 
   # Standard font: 42 characters per line if using 80mm paper  
   def set_character_width_normal
-    set_print_mode 0;
+    set_print_mode 0
   end
 
   def set_print_mode_a
@@ -61,11 +61,27 @@ class Microprinter
   
   # Narrow font, more characters per line
   def set_character_width_narrow
-    set_print_mode 1;
+    set_print_mode 1
   end
 
   def set_print_mode_b
     set_character_width_narrow
+  end
+  
+  def set_character_width_double
+    set_print_mode 32
+  end
+  
+  def set_character_height_double
+    set_print_mode 16
+  end
+  
+  def set_character_size_quadruple
+    set_print_mode 48
+  end
+
+  def set_print_mode_normal
+    set_print_mode 0
   end
 
   def set_print_mode(i)
@@ -145,7 +161,8 @@ class Microprinter
     self.feed_and_cut
   end
 
-  def feed() 
+  # for CBM 231
+  def feed
     @sp.print("\n")
     @sp.print("\n")
     @sp.print("\n")
