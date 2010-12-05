@@ -3,8 +3,8 @@ require 'sinatra'
 require 'rss'
 require 'open-uri'
 require 'cgi'
-require './Microprinter_debug.rb' # uncomment this to print to the console instead of the printer. 
-# require './Microprinter.rb' 
+# require './Microprinter_debug.rb' # uncomment this to print to the console instead of the printer. 
+require './Microprinter.rb' 
 
 configure do
   set :arduinoport, "/dev/cu.usbmodemfa241" # or whatever yours is. 
@@ -13,7 +13,7 @@ end
 
 
 before do
-  @printer = Microprinter_debug.new(settings.arduinoport)
+  # @printer = Microprinter_debug.new(settings.arduinoport)
   @printer = Microprinter.new(settings.arduinoport)
   @printer.set_character_width_normal
 end
@@ -154,13 +154,13 @@ get '/' do
 end
 
 get '/linkformat' do
-  linktext = <<-END_OF_LINKTEXT
-    Implementing the Demon-Haunted Notebook
-    http://paperbits.net/post/1471783673/implementing-the-demon-haunted-notebook
-    
-    
-    http://goo.gl/qjZ8T
-  END_OF_LINKTEXT
+ linktext = <<-END_OF_LINKTEXT
+Implementing the Demon-Haunted Notebook
+http://paperbits.net/post/1471783673/implementing-the-demon-haunted-notebook
+
+
+http://goo.gl/qjZ8T
+END_OF_LINKTEXT
   
   @printer.feed
   @printer.print_and_cut linktext.split("\n")
