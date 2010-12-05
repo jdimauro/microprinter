@@ -46,9 +46,12 @@ end
 
 get '/print/barcode' do
   @printer.set_barcode_width(Microprinter::BARCODE_WIDTH_MEDIUM)
+  puts Microprinter::BARCODE_WIDTH_MEDIUM # => 3
   @printer.set_barcode_height(45)
+  puts Microprinter::BARCODE_TEXT_BELOW # => 2
   @printer.set_barcode_text_position(Microprinter::BARCODE_TEXT_BELOW)
-  @printer.print_barcode(Microprinter::BARCODE_MODE_CODE39, "123456789")
+  # @printer.print_barcode(Microprinter::BARCODE_MODE_CODE39, "123456789")
+  @printer.print_barcode("123456789")
   @printer.feed_and_cut
   "Printed sample barcode"
 end
@@ -70,14 +73,14 @@ get '/print/barcode/:barcode' do
 
   if params[:mode]
     case params[:mode]
-      when "upca" then @printer.print_barcode(Microprinter::BARCODE_MODE_UPCA, params[:barcode])
-      when "upce" then @printer.print_barcode(Microprinter::BARCODE_MODE_UPCE, params[:barcode])
-      when "jan13aen" then @printer.print_barcode(Microprinter::BARCODE_MODE_JAN13AEN, params[:barcode])
-      when "jan8ean" then @printer.print_barcode(Microprinter::BARCODE_MODE_JAN8EAN, params[:barcode])
-      when "code39" then @printer.print_barcode(Microprinter::BARCODE_MODE_CODE39, params[:barcode])
-      when "itf" then @printer.print_barcode(Microprinter::BARCODE_MODE_ITF, params[:barcode])
-      when "codeabar" then @printer.print_barcode(Microprinter::BARCODE_MODE_CODEABAR, params[:barcode])
-      when "code128" then @printer.print_barcode(Microprinter::BARCODE_MODE_CODE128, params[:barcode])
+      when "upca" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_UPCA)
+      when "upce" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_UPCE)
+      when "jan13aen" then @printer.print_barcode(params[:barcode],Microprinter::BARCODE_MODE_JAN13AEN)
+      when "jan8ean" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_JAN8EAN)
+      when "code39" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_CODE39)
+      when "itf" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_ITF)
+      when "codeabar" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_CODEABAR)
+      when "code128" then @printer.print_barcode(params[:barcode], Microprinter::BARCODE_MODE_CODE128)
     end
   else 
     @printer.print_barcode(params[:barcode])
